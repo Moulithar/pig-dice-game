@@ -17,7 +17,7 @@ let activePlayer = "player-0";
 score0Element.textContent = 0;
 score1Element.textContent = 0;
 
-const toggleActivePlayer = (activePlayer) => {
+const toggleActivePlayer = () => {
   if (activePlayer == "player-1") {
     player1.classList.remove("player--active");
     player0.classList.add("player--active");
@@ -25,6 +25,7 @@ const toggleActivePlayer = (activePlayer) => {
       Number(score1Element.textContent) + currentScore;
     currentScore = 0;
     current1Score.textContent = 0;
+    activePlayer = "player-0";
   } else if (activePlayer == "player-0") {
     player0.classList.remove("player--active");
     player1.classList.add("player--active");
@@ -32,6 +33,7 @@ const toggleActivePlayer = (activePlayer) => {
       Number(score0Element.textContent) + currentScore;
     currentScore = 0;
     current0Score.textContent = 0;
+    activePlayer = "player-1";
   }
 };
 
@@ -52,24 +54,13 @@ buttonRoll.addEventListener("click", () => {
     }
   } else {
     currentScore = 0;
-    toggleActivePlayer(activePlayer);
-    if (activePlayer == "player-0") {
-      activePlayer = "player-1";
-    } else if (activePlayer == "player-1") {
-      activePlayer = "player-0";
-    }
+    toggleActivePlayer();
   }
 });
 
 buttonHold.addEventListener("click", () => {
-  toggleActivePlayer(activePlayer);
-  if (activePlayer == "player-0") {
-    activePlayer = "player-1";
-  } else if (activePlayer == "player-1") {
-    activePlayer = "player-0";
-  }
-  console.log("value", score1Element.textContent);
-  console.log("value", score0Element.textContent);
+  toggleActivePlayer();
+
   if (Number(score1Element.textContent) >= 100) {
     player1.classList.add("player--winner");
   } else if (Number(score0Element.textContent) >= 100) {
