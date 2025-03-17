@@ -18,23 +18,20 @@ score0Element.textContent = 0;
 score1Element.textContent = 0;
 
 const toggleActivePlayer = () => {
-  if (activePlayer == "player-1") {
-    player1.classList.remove("player--active");
-    player0.classList.add("player--active");
-    score1Element.textContent =
-      Number(score1Element.textContent) + currentScore;
-    currentScore = 0;
-    current1Score.textContent = 0;
-    activePlayer = "player-0";
-  } else if (activePlayer == "player-0") {
-    player0.classList.remove("player--active");
-    player1.classList.add("player--active");
+  if (activePlayer == "player-0") {
     score0Element.textContent =
       Number(score0Element.textContent) + currentScore;
-    currentScore = 0;
     current0Score.textContent = 0;
     activePlayer = "player-1";
+  } else {
+    score1Element.textContent =
+      Number(score1Element.textContent) + currentScore;
+    current1Score.textContent = 0;
+    activePlayer = "player-0";
   }
+  player0.classList.toggle("player--active");
+  player1.classList.toggle("player--active");
+  currentScore = 0;
 };
 
 diceElement.classList.add("hidden");
@@ -46,12 +43,9 @@ buttonRoll.addEventListener("click", () => {
 
   if (dice !== 1) {
     currentScore += dice;
-    console.log(currentScore);
-    if (activePlayer == "player-0") {
-      current0Score.textContent = currentScore;
-    } else {
-      current1Score.textContent = currentScore;
-    }
+    activePlayer == "player-0"
+      ? (current0Score.textContent = currentScore)
+      : (current1Score.textContent = currentScore);
   } else {
     currentScore = 0;
     toggleActivePlayer();
